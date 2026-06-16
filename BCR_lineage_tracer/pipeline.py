@@ -5,19 +5,15 @@ run() — top-level orchestration: loader → tracer → visualiser → Excel ex
 
 Outputs per run
 ---------------
-  tree_<clone_id>.png       Cladogram with seq1/seq2/… node labels and a
-                            numeric x-axis showing mutation distance.
+  tree_<clone_id>.png   Cladogram with seq1/seq2/… node labels and a
+                        numeric x-axis showing mutation distance.
 
-  node_labels.xlsx          One sheet per clone (or combined if many clones).
-                            Columns:
-                              clone_id | seq_label | cell_id | isotype
-                              | sample_id | cluster_annotated
-                            Maps every seqN label back to the original cell ID
-                            so the tree and table can be cross-referenced.
-
-  mutation_table.xlsx       Per-edge mutation events.  Now includes a
-                            seq_label column so rows can be linked to the tree
-                            by label name rather than raw cell ID.
+  mutation_table.xlsx   Per-edge mutation events with a seq_label column
+                        (seq1, seq2, … for observed cells; anc1, anc2, …
+                        for inferred internal nodes) so every row in the
+                        table maps directly to a labelled node on the tree.
+                        The original cell_id is kept alongside seq_label
+                        for cross-referencing with the source data.
 """
 
 from __future__ import annotations
@@ -76,15 +72,7 @@ def run(
 
     # ── 3. Process each clone ─────────────────────────────────────────────
     all_mutation_tables: List[pd.DataFrame] = []
-    all_label_tables:    List[pd.DataFrame] = []
     n_ok = n_skip = n_fail = 0
-
-    # Build a lookup from cell_id → CellRecord for metadata enrichment
-    record_lookup: Dict[str, CellRecord] = {
-        r.cell_id: r
-        for recs in clones.values()
-        for r in recs
-    }
 
     for cid, records in clones.items():
         n_obs = sum(1 for r in records if not r.is_germline)
@@ -106,7 +94,7 @@ def run(
             n_fail += 1
             continue
 
-        # ── visualisation — returns cell_id → seq_label mapping
+        # ── visualisation — returns {cell_id → seq_label} mapping
         out_png = os.path.join(output_dir, f"tree_{cid}.png")
         fig, _, cell_id_map = plot_tree(
             tree,
@@ -117,36 +105,38 @@ def run(
         )
         plt.close("all")
 
-        # ── node label table ──────────────────────────────────────────────
-        # One row per observed cell: seq_label | cell_id | metadata
-        label_rows = []
-        for cell_id, seq_label in sorted(
-            cell_id_map.items(), key=lambda kv: kv[1]   # sort by seq1,seq2,…
-        ):
-            rec = record_lookup.get(cell_id)
-            label_rows.append({
-                "clone_id":          cid,
-                "seq_label":         seq_label,
-                "cell_id":           cell_id,
-                "isotype":           rec.isotype           if rec else "",
-                "sample_id":         rec.sample_id         if rec else "",
-                "cluster_annotated": rec.cluster_annotated if rec else "",
-            })
-        if label_rows:
-            all_label_tables.append(pd.DataFrame(label_rows))
+        # Build a complementary map for internal (ancestral) nodes.
+        # The visualization module numbers them anc1, anc2, … in pre-order;
+        # we replicate that here so the mutation table gets the same labels.
+        anc_counter = 1
+        anc_name_map: Dict[str, str] = {}
+        for cl in tree.find_clades(order="preorder"):
+            if cl.is_terminal():
+                continue
+            if getattr(cl, "is_germline", False):
+                if cl.name:
+                    anc_name_map[cl.name] = "Germline"
+            elif cl.name and cl.name not in anc_name_map:
+                anc_name_map[cl.name] = f"anc{anc_counter}"
+                anc_counter += 1
 
-        # ── mutation table — add seq_label column ─────────────────────────
+        # Full node-name → short label (observed cells + ancestral nodes)
+        full_label_map: Dict[str, str] = {**anc_name_map, **cell_id_map}
+
+        # ── mutation table ────────────────────────────────────────────────
         mt = tracer.mutation_table()
-        mt.insert(
-            mt.columns.get_loc("node") + 1,   # place right after "node"
-            "seq_label",
-            mt["node"].map(cell_id_map).fillna(
-                mt["node"].map(                # internal nodes get anc label
-                    {c.name: f"anc"            # placeholder; viz assigned them
-                     for c in tree.find_clades() if not c.is_terminal()}
-                )
-            ).fillna(""),
-        )
+
+        # Only add seq_label if the table has rows (avoids KeyError on
+        # empty DataFrames which have no columns at all).
+        if not mt.empty:
+            # seq_label placed right after the "node" column
+            node_pos = mt.columns.get_loc("node") + 1
+            mt.insert(
+                node_pos,
+                "seq_label",
+                mt["node"].map(full_label_map).fillna(""),
+            )
+
         all_mutation_tables.append(mt)
 
         log(f"  ✓     clone {cid}  |  {n_obs} cells  "
@@ -154,16 +144,7 @@ def run(
             f"|  {len(mt)} edges  →  {out_png}")
         n_ok += 1
 
-    # ── 4. Export node label table ────────────────────────────────────────
-    label_path = os.path.join(output_dir, "node_labels.xlsx")
-    if all_label_tables:
-        combined_labels = pd.concat(all_label_tables, ignore_index=True)
-        combined_labels.to_excel(label_path, index=False)
-        log(f"Node label table → {label_path}")
-    else:
-        combined_labels = pd.DataFrame()
-
-    # ── 5. Export mutation table ──────────────────────────────────────────
+    # ── 4. Export mutation table ──────────────────────────────────────────
     combined_mut = (
         pd.concat(all_mutation_tables, ignore_index=True)
         if all_mutation_tables
