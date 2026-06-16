@@ -77,7 +77,7 @@ The outputs are written to a single folder (default: `bcr_lineage_output/`).
 - The **germline root** is always drawn as a large black square labelled "Germline".
 - The x-axis shows **cumulative mutation distance from the germline**.
 
-#### *Mutation table:*
+#### *The Mutation table:*
 
 | Column | Description |
 |---|---|
@@ -96,20 +96,14 @@ The outputs are written to a single folder (default: `bcr_lineage_output/`).
 | `amino_acid_changes` | Changes list e.g. `K14R` |
 
 
-
-
-
-
-
 ## The technicalities: ##
-As for now, the requirements.txt will include:
-* pandas
-* openpyxl
+The requirements.txt include:
 * biopython
-* ete3
 * matplotlib
-* scipy
 * numpy
+* openpyxl
+* pandas
+* pytest
 * tkinter (for GUI )
 
 ## Installation and running the project
@@ -122,20 +116,14 @@ pip install -r requirements.txt
 
 ### 2. Run the project
 
-**Option A — Graphical Interface (recommended):**
+python run_gui.py
 
-python gui.py
+This opens a window where you can upload your `.xlsx` file,
+select the clone to analyze, and view the results.
 
-This opens a window where you can upload your `.xlsx` / `.csv` / `.tsv` file,
-select the clone to analyze, and view or export the results.
+### 3. Run the tests (optional)
 
-**Option B — Command Line:**
-
-python run_lineage.py - input your_file.xlsx
-
-### 3. Run the tests
-
-pytest tests/
+Open the test folder
 
 
 ### Notes:
