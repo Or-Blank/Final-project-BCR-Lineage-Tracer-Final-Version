@@ -150,7 +150,7 @@ Final-project-BCR-Lineage-Tracer-Final-Version/
 │   ├── main.py                        CLI argument parser
 │   └── init.py                        Public API re-exports
 │
-└── tests/
+└── Tests/
     ├── conftest.py                    Shared fixtures
     ├── test_loader.py                 32 tests — column detection, format detection,
     │                                  germline construction, IMGT ungapping,
