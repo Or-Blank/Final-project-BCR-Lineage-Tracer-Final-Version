@@ -170,7 +170,7 @@ Final-project-BCR-Lineage-Tracer-Final-Version/
     └── test_visualization.py          10 tests — matplotlib output, legend, PNG
 ```                             
                                                          
-### Notes:
+## Notes: ##
 This project is part of the Python Programming Course at the Weizmann Institute of Science.
 
 You can view the course main repository here: https://github.com/Code-Maven/wis-python-course-2026-03
