@@ -106,11 +106,11 @@ Since the full experimental Excel file cannot be shared (ongoing research in the
 
 *My trees* — lineage trees generated using the Python tool developed in this project.
 
-*Compared trees* — the same trees generated independently by a bioinformatician working with the lab (**It is important to mention that I did not have any access to this bioinformatician's code**).
+*Compared trees* — the same trees generated independently by a bioinformatician working with the lab
 
-**The full Excel file can be shared privately if required or needed for the assessment of the project.**
+* **It is important to mention that I did not have any access to this bioinformatician's code**).
 
-$\color{Green}(The full Excel file can be shared privately if required or needed for the assessment of the project.)$
+* $\color{Green}{\text{(The full Excel file can be shared privately if required or needed for the assessment of the project.)}}$
 
 
 ## The technicalities ##
