@@ -140,7 +140,7 @@ select the clone to analyze, and view the results.
 
 ### 3. Run the tests (optional)
 ```bash
-pytest tests/
+pytest Tests/
 ```
 
 ## Project structure
@@ -150,6 +150,7 @@ Final-project-BCR-Lineage-Tracer-Final-Version/
 │
 ├── run_gui.py                         launch the GUI 
 ├── requirements.txt
+├── pytest.ini                         Instructions for running the tests
 │
 ├── BCR_lineage_tracer/             
 │   ├── constants.py                   Isotype CSR order, gap chars, marker cycle
