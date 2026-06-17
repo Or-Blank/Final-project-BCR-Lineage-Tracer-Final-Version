@@ -99,7 +99,7 @@ The outputs are written to a single folder (default: `bcr_lineage_output/`).
 
 
 ## The technicalities: ##
-The requirements.txt include:
+The requirements include:
 * biopython
 * matplotlib
 * numpy
