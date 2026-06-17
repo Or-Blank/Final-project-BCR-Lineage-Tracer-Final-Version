@@ -1,4 +1,4 @@
-# BCR Lineage Tracer (B cell Linage Tree Maker)
+# BCR Lineage Tracer (B cell Linage Tree Maker) 🧬🌳
 In this project, I created a Python tool for making B cell receptor (BCR) clonal lineage trees from single-cell sequencing data.
 The tool infers the ancestral germline BCR, traces somatic hypermutation (SHM) events across cells, and outputs an annotated phylogenetic tree showing how B cell clones evolved and expanded.
 B cell lineage tracing is a tool for understanding how the immune system builds and refines antibody responses. By capturing the order and location of these mutations, we can get insights into the selection shaping BCR evolution and antibody creation.
