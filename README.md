@@ -98,12 +98,10 @@ The outputs are written to a single folder (default: `bcr_lineage_output/`).
 * Note: There is a recurring pattern in both the tree and the table where several cell-type annotations appear to represent essentially the same population (e.g., 2‑B cell, 3‑B cell). These are all GC B cells, but they differ slightly in characteristics that are not reflected in the tree or the table and become apparent only in other experiments.
 
 ### Data to use:
-This project includes two types of example data:
-
-**1.** "Public" RNA‑seq dataset (in the folder Examples and data to test):
+**1. "Public" RNA‑seq dataset** (in the folder Examples and data to test):
 A sample table derived from single‑cell RNA‑sequencing of primary‑tumor B cells and their B‑cell receptors (BCRs), the data set from Day05 assignment.
 
-**2.** Trees examples based on and Excel file of the Shulman Lab (in the folder Examples and data to test):
+**2. Trees examples based on and Excel file of the Shulman Lab** (in the folder Examples and data to test):
 Since the full experimental Excel file cannot be shared (ongoing research in the lab), four example tree images are included instead:
 
 *My trees* — lineage trees generated using the Python tool developed in this project.
