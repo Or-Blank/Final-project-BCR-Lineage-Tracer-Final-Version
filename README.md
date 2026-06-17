@@ -140,10 +140,8 @@ Final-project-BCR-Lineage-Tracer-Final-Version/
 │
 ├── BCR_lineage_tracer/             
 │   ├── constants.py                   Isotype CSR order, gap chars, marker cycle
-│   ├── loader.py                      BCRTreeLoader — reads xlsx, detects format,
-│   │                                  resolves columns, builds germlines
-│   ├── tracer.py                      LineageTracer — NJ tree, Fitch parsimony,
-│   │                                  polytomy collapse, isotype NNI
+│   ├── loader.py                      BCRTreeLoader — reads xlsx, detects format, resolves columns, builds germlines                               
+│   ├── tracer.py                      LineageTracer — NJ tree, Fitch parsimony, polytomy collapse, isotype NNI                                 
 │   ├── visualization.py               plot_tree() — matplotlib cladogram
 │   ├── pipeline.py                    run() — orchestrates all steps, writes outputs
 │   ├── gui.py                         Tkinter graphical interface
