@@ -109,7 +109,7 @@ Since the full experimental Excel file cannot be shared (ongoing research in the
 *Compared trees* — the same trees generated independently by a bioinformatician working with the lab
 
 * **It is important to mention that I did not have any access to this bioinformatician's code**.
-* **The full Excel file can be shared privately if required or needed for the assessment of the project**
+* **The other full Excel file can be shared privately if required or needed for the assessment of the project**
 
 
 ## The technicalities ##
