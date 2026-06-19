@@ -1,5 +1,5 @@
 """
-conftest.py — shared pytest fixtures for BCR Lineage Tracer tests.
+conftest.py — shared pytest fixtures for the BCR Lineage Tracer tests.
 All fixtures are in-memory / tmp_path so no patient data is needed.
 """
 import random
