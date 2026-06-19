@@ -101,7 +101,7 @@ The outputs are written to a single folder (default: `bcr_lineage_output/`).
 **1. "Public" RNA‑seq dataset - PT7_Final_Combined_Table.xlsx** (in the folder Examples and data to test):
 A sample table derived from single‑cell RNA‑sequencing of primary‑tumor B cells and their B‑cell receptors (BCRs), the data set from Day05 assignment.
 
-**2. Any BCR/B-cell seq data you have access to will work**
+**2. Any BCR/B-cell seq data you have access to will work**.
 
 **3. Trees examples based on and Excel file of the Shulman Lab** (in the folder Examples and data to test):
 Since the full experimental Excel file cannot be shared (ongoing research in the lab), four example tree images are included instead:
